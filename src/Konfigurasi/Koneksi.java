@@ -8,7 +8,7 @@ public class Koneksi {
 
     public static Connection getConnection() {
         Connection conn = null;
-        String url = "jdbc:mysql://localhost:3306/pos";
+        String url = "jdbc:mysql://localhost:3306/ecommerce";
         String user = "root";
         String password = "";
         try {
