@@ -7,7 +7,9 @@ package Form;
 
 import Konfigurasi.Koneksi;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -324,6 +326,21 @@ public class main_form extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        try {
+            Connection conn = Koneksi.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("insert into sellers(id, seller_name, address, postal_code, email, phone) values(?,?,?,?,?,?)");
+            stmt.setString(1, jTextField_sellers_kode.getText());
+            stmt.setString(2, jTextField_sellers_nama.getText());
+            stmt.setString(3, jTextField_sellers_alamat.getText());
+            stmt.setString(4, jTextField_sellers_kodepos.getText());
+            stmt.setString(5, jTextField_sellers_email.getText());
+            stmt.setString(6, jTextField_sellers_telepon.getText());
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Data berhasil disimpan", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+            TampilDataSellers();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
