@@ -11,8 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import java.sql.PreparedStatement;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -196,13 +194,13 @@ public class main_form extends javax.swing.JFrame {
         });
 
         jButton2.setText("Edit");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jButton3.setText("Hapus");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel_sellersLayout = new javax.swing.GroupLayout(jPanel_sellers);
         jPanel_sellers.setLayout(jPanel_sellersLayout);
@@ -237,7 +235,7 @@ public class main_form extends javax.swing.JFrame {
                             .addComponent(jTextField_sellers_email, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel_sellers_telepon)
                             .addComponent(jLabel_sellers_email))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(39, 39, 39))
         );
@@ -355,38 +353,49 @@ public class main_form extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Connection conn = Koneksi.getConnection();
+        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin "
+                + "ingin menghapus data tersebut?", "Konfirmasi",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirm == 0) {
+            try {
+                java.sql.PreparedStatement stmt = conn.prepareStatement("delete"
+                        + " from sellers where id ='" 
+                        + jTextField_sellers_kode.getText() + "'");
+                stmt.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Data berhasil dihapus",
+                        "Pesan", JOptionPane.INFORMATION_MESSAGE);
+                TampilDataSellers();
+                jTextField_sellers_kode.setText("");
+                jTextField_sellers_nama.setText("");
+                jTextField_sellers_alamat.setText("");
+                jTextField_sellers_kodepos.setText("");
+                jTextField_sellers_email.setText("");
+                jTextField_sellers_telepon.setText("");
+                jTextField_sellers_kode.requestFocus();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Data gagal di hapus" 
+                        + e.getMessage(), "Pesan", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     private void jTable_sellersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_sellersMouseClicked
         int baris = jTable_sellers.getSelectedRow();
-        jTextField_sellers_kode.setText(DftTblModel_sellers.getValueAt(baris, 0).toString());
-        jTextField_sellers_nama.setText(DftTblModel_sellers.getValueAt(baris, 1).toString());
-        jTextField_sellers_alamat.setText(DftTblModel_sellers.getValueAt(baris, 2).toString());
-        jTextField_sellers_kodepos.setText(DftTblModel_sellers.getValueAt(baris, 3).toString());
-        jTextField_sellers_email.setText(DftTblModel_sellers.getValueAt(baris, 4).toString());
-        jTextField_sellers_telepon.setText(DftTblModel_sellers.getValueAt(baris, 5).toString());
+        jTextField_sellers_kode.setText(
+                DftTblModel_sellers.getValueAt(baris, 0).toString());
+        jTextField_sellers_nama.setText(
+                DftTblModel_sellers.getValueAt(baris, 1).toString());
+        jTextField_sellers_alamat.setText(
+                DftTblModel_sellers.getValueAt(baris, 2).toString());
+        jTextField_sellers_kodepos.setText(
+                DftTblModel_sellers.getValueAt(baris, 3).toString());
+        jTextField_sellers_email.setText(
+                DftTblModel_sellers.getValueAt(baris, 4).toString());
+        jTextField_sellers_telepon.setText(
+                DftTblModel_sellers.getValueAt(baris, 5).toString());
     }//GEN-LAST:event_jTable_sellersMouseClicked
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
-            Connection conn = Koneksi.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(
-                    "update sellers"
-                            + " set seller_name=?, address=?, postal_code=?,"
-                            + " email=?, phone=? "
-                            + "where id=?");
-            stmt.setString(1, jTextField_sellers_nama.getText());
-            stmt.setString(2, jTextField_sellers_alamat.getText());
-            stmt.setString(3, jTextField_sellers_kodepos.getText());
-            stmt.setString(4, jTextField_sellers_email.getText());
-            stmt.setString(5, jTextField_sellers_telepon.getText());
-            stmt.setString(6, jTextField_sellers_kode.getText());
-            
-            stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Data berhasil diubah", "Pesan", JOptionPane.INFORMATION_MESSAGE);
-            TampilDataSellers();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
