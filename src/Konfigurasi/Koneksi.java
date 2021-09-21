@@ -10,7 +10,7 @@ public class Koneksi {
         Connection conn = null;
         String url = "jdbc:mysql://localhost:3306/ecommerce";
         String user = "root";
-        String password = "";
+        String password = "imaqn123";
         try {
             conn = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {

@@ -20,6 +20,7 @@ public class main_form extends javax.swing.JFrame {
     
     private DefaultTableModel DftTblModel_sellers;
     private DefaultTableModel DftTblModel_products;
+    private DefaultTableModel DftTblModel_customers;
     private String SQL;
 
     /**
@@ -29,6 +30,7 @@ public class main_form extends javax.swing.JFrame {
         initComponents();
         this.TampilDataSellers();
         this.product_TampilData();
+        this.TampilDataCustomers();
     }
     
     /**
@@ -94,6 +96,36 @@ public class main_form extends javax.swing.JFrame {
             System.out.println(e.getMessage());
         }
     }
+    private void TampilDataCustomers() {
+        DftTblModel_customers = new DefaultTableModel();
+        DftTblModel_customers.addColumn("ID");
+        DftTblModel_customers.addColumn("NAMA");
+        DftTblModel_customers.addColumn("ALAMAT");
+        DftTblModel_customers.addColumn("EMAIL");
+        DftTblModel_customers.addColumn("NO TELP");
+        DftTblModel_customers.addColumn("CREDIT CARD");
+        DftTblModel_customers.addColumn("CREDIT CARD TYPE");
+        jTable_customers.setModel(DftTblModel_customers);
+        Connection conn = Koneksi.getConnection();
+        try {
+            java.sql.Statement stmt = conn.createStatement();
+            SQL = "select * from customers";
+            java.sql.ResultSet res = stmt.executeQuery(SQL);
+            while (res.next()) {
+                DftTblModel_customers.addRow(new Object[]{
+                    res.getString("id"),
+                    res.getString("customer_name"),
+                    res.getString("address"),
+                    res.getString("email"),
+                    res.getString("phone"),
+                    res.getString("credit_card"),
+                    res.getString("credit_card_type"),
+                });
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -138,6 +170,26 @@ public class main_form extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable_customers = new javax.swing.JTable();
+        jLabel9 = new javax.swing.JLabel();
+        jTextField_idCustomer = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jTextField_namaCustomer = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jTextField_alamatCustomer = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jTextField_emailCustomer = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jTextField_phoneCustomer = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jTextField_creditCardCustomer = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jTextField_creditTypeCustomer = new javax.swing.JTextField();
+        jButton_simpanCustomer = new javax.swing.JButton();
+        jButton_editCustomer = new javax.swing.JButton();
+        jButton_hapusCustomer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -370,6 +422,11 @@ public class main_form extends javax.swing.JFrame {
         });
 
         jButton2.setText("Edit");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Hapus");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -411,7 +468,7 @@ public class main_form extends javax.swing.JFrame {
                             .addComponent(jTextField_sellers_email, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel_sellers_telepon)
                             .addComponent(jLabel_sellers_email))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(39, 39, 39))
         );
@@ -459,15 +516,163 @@ public class main_form extends javax.swing.JFrame {
 
         jTabbedPane_container.addTab("Sellers", jPanel_sellers);
 
+        jLabel8.setText("DATA CUSTOMER");
+
+        jTable_customers.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable_customers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_customersMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTable_customers);
+
+        jLabel9.setText("ID");
+
+        jTextField_idCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_idCustomerActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Nama");
+
+        jTextField_namaCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_namaCustomerActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Alamat");
+
+        jTextField_alamatCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_alamatCustomerActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setText("Email");
+
+        jLabel13.setText("Phone");
+
+        jLabel14.setText("Credit card");
+
+        jLabel15.setText("Credit type");
+
+        jTextField_creditTypeCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_creditTypeCustomerActionPerformed(evt);
+            }
+        });
+
+        jButton_simpanCustomer.setText("Simpan");
+        jButton_simpanCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_simpanCustomerActionPerformed(evt);
+            }
+        });
+
+        jButton_editCustomer.setText("Edit");
+        jButton_editCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_editCustomerActionPerformed(evt);
+            }
+        });
+
+        jButton_hapusCustomer.setText("Hapus");
+        jButton_hapusCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_hapusCustomerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 753, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(321, 321, 321)
+                .addComponent(jLabel8)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel9)
+                        .addComponent(jTextField_idCustomer)
+                        .addComponent(jLabel10)
+                        .addComponent(jTextField_namaCustomer)
+                        .addComponent(jLabel11)
+                        .addComponent(jTextField_alamatCustomer)
+                        .addComponent(jLabel12)
+                        .addComponent(jTextField_emailCustomer)
+                        .addComponent(jLabel13)
+                        .addComponent(jTextField_phoneCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                        .addComponent(jLabel14)
+                        .addComponent(jTextField_creditCardCustomer)
+                        .addComponent(jLabel15)
+                        .addComponent(jTextField_creditTypeCustomer))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jButton_simpanCustomer)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton_editCustomer)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton_hapusCustomer)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 593, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addGap(35, 35, 35)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_idCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField_namaCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_alamatCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_emailCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_phoneCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_creditCardCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_creditTypeCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton_simpanCustomer)
+                            .addComponent(jButton_editCustomer)
+                            .addComponent(jButton_hapusCustomer))))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         jTabbedPane_container.addTab("Customers", jPanel3);
@@ -681,6 +886,106 @@ public class main_form extends javax.swing.JFrame {
         product_seller_id.setText(DftTblModel_products.getValueAt(baris, 5).toString());
     }//GEN-LAST:event_jTable_productsMouseClicked
 
+    private void jTextField_idCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_idCustomerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_idCustomerActionPerformed
+
+    private void jTextField_namaCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_namaCustomerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_namaCustomerActionPerformed
+
+    private void jTextField_alamatCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_alamatCustomerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_alamatCustomerActionPerformed
+
+    private void jTextField_creditTypeCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_creditTypeCustomerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_creditTypeCustomerActionPerformed
+
+    private void jButton_simpanCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_simpanCustomerActionPerformed
+        try {
+            Connection conn = Koneksi.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("insert into customers values(?,?,?,?,?,?,?)");
+            stmt.setString(1, jTextField_idCustomer.getText());
+            stmt.setString(2, jTextField_namaCustomer.getText());
+            stmt.setString(3, jTextField_alamatCustomer.getText());
+            stmt.setString(4, jTextField_emailCustomer.getText());
+            stmt.setString(5, jTextField_phoneCustomer.getText());
+            stmt.setString(6, jTextField_creditCardCustomer.getText());
+            stmt.setString(7, jTextField_creditTypeCustomer.getText());
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Data berhasil disimpan", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+            TampilDataCustomers();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_jButton_simpanCustomerActionPerformed
+
+    private void jTable_customersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_customersMouseClicked
+        int baris = jTable_customers.getSelectedRow();
+        jTextField_idCustomer.setText(
+                DftTblModel_customers.getValueAt(baris, 0).toString());
+        jTextField_namaCustomer.setText(
+                DftTblModel_customers.getValueAt(baris, 1).toString());
+        jTextField_alamatCustomer.setText(
+                DftTblModel_customers.getValueAt(baris, 2).toString());
+        jTextField_emailCustomer.setText(
+                DftTblModel_customers.getValueAt(baris, 3).toString());
+        jTextField_phoneCustomer.setText(
+                DftTblModel_customers.getValueAt(baris, 4).toString());
+        jTextField_creditCardCustomer.setText(
+                DftTblModel_customers.getValueAt(baris, 5).toString());
+        jTextField_creditTypeCustomer.setText(
+                DftTblModel_customers.getValueAt(baris, 6).toString());
+    }//GEN-LAST:event_jTable_customersMouseClicked
+
+    private void jButton_editCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_editCustomerActionPerformed
+        try {
+            Connection conn = Koneksi.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                    "update customers"
+                            + " set customer_name=?, address=?, "
+                            + " email=?, phone=?, credit_card=?, credit_card_type=? "
+                            + "where id=?");
+            stmt.setString(1, jTextField_namaCustomer.getText());
+            stmt.setString(2, jTextField_alamatCustomer.getText());
+            stmt.setString(3, jTextField_emailCustomer.getText());
+            stmt.setString(4, jTextField_phoneCustomer.getText());
+            stmt.setString(5, jTextField_creditCardCustomer.getText());
+            stmt.setString(6, jTextField_creditTypeCustomer.getText());
+            stmt.setString(7, jTextField_idCustomer.getText());
+            
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Data berhasil diubah", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+            TampilDataCustomers();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_jButton_editCustomerActionPerformed
+
+    private void jButton_hapusCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_hapusCustomerActionPerformed
+        Connection conn = Koneksi.getConnection();
+        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin ingin menghapus data tersebut?", "Konfirmasi", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirm == 0) {
+            try {
+                java.sql.PreparedStatement stmt = conn.prepareStatement("delete from customers where id ='" + jTextField_idCustomer.getText() + "'");
+                stmt.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Data berhasil dihapus", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+                TampilDataCustomers();
+                jTextField_idCustomer.setText("");
+                jTextField_namaCustomer.setText("");
+                jTextField_alamatCustomer.setText("");
+                jTextField_emailCustomer.setText("");
+                jTextField_phoneCustomer.setText("");
+                jTextField_creditCardCustomer.setText("");
+                jTextField_creditTypeCustomer.setText("");
+                jTextField_idCustomer.requestFocus();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Data gagal di hapus" + e.getMessage(), "Pesan", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButton_hapusCustomerActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -720,13 +1025,24 @@ public class main_form extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton_editCustomer;
+    private javax.swing.JButton jButton_hapusCustomer;
+    private javax.swing.JButton jButton_simpanCustomer;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel_sellers_alamat;
     private javax.swing.JLabel jLabel_sellers_email;
     private javax.swing.JLabel jLabel_sellers_judul;
@@ -739,9 +1055,18 @@ public class main_form extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel_sellers;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane_container;
+    private javax.swing.JTable jTable_customers;
     private javax.swing.JTable jTable_products;
     private javax.swing.JTable jTable_sellers;
+    private javax.swing.JTextField jTextField_alamatCustomer;
+    private javax.swing.JTextField jTextField_creditCardCustomer;
+    private javax.swing.JTextField jTextField_creditTypeCustomer;
+    private javax.swing.JTextField jTextField_emailCustomer;
+    private javax.swing.JTextField jTextField_idCustomer;
+    private javax.swing.JTextField jTextField_namaCustomer;
+    private javax.swing.JTextField jTextField_phoneCustomer;
     private javax.swing.JTextField jTextField_sellers_alamat;
     private javax.swing.JTextField jTextField_sellers_email;
     private javax.swing.JTextField jTextField_sellers_kode;
