@@ -28,6 +28,7 @@ public class main_form extends javax.swing.JFrame {
     public main_form() {
         initComponents();
         this.TampilDataSellers();
+        this.showCustomers();
     }
 
     /**
@@ -372,8 +373,18 @@ public class main_form extends javax.swing.JFrame {
         });
 
         jButton_editCustomers.setText("Edit");
+        jButton_editCustomers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_editCustomersActionPerformed(evt);
+            }
+        });
 
         jButton_deleteCustomers.setText("Delete");
+        jButton_deleteCustomers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_deleteCustomersActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -540,6 +551,57 @@ public class main_form extends javax.swing.JFrame {
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_jButton_saveCustomersActionPerformed
+
+    private void jButton_editCustomersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_editCustomersActionPerformed
+        try {
+            Connection conn = Koneksi.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                    "UPDATE customers SET id=?, customer_name=?, address=?, email=?, "
+                            + "phone=?, credit_card=?, credit_card_type=? WHERE id=?");
+            stmt.setString(1, jTextField_id.getText());
+            stmt.setString(2, jTextField_name.getText());
+            stmt.setString(3, jTextField_address.getText());
+            stmt.setString(4, jTextField_email.getText());
+            stmt.setString(5, jTextField_phone.getText());
+            stmt.setString(6, jTextField_creditcard.getText());
+            stmt.setString(7, jTextField_credittype.getText());
+            
+            stmt.setString(8, jTextField_id.getText());
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Data berhasil diubah", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+            showCustomers();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_jButton_editCustomersActionPerformed
+
+    private void jButton_deleteCustomersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_deleteCustomersActionPerformed
+        Connection conn = Koneksi.getConnection();
+        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin ingin menghapus data tersebut?", "Konfirmasi", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirm == 0) {
+            try {
+                java.sql.PreparedStatement stmt = conn.prepareStatement(
+                        "DELETE FROM customers WHERE id ='" + jTextField_id.getText() + "'");
+                stmt.executeUpdate();
+                
+                JOptionPane.showMessageDialog(null, "Data berhasil dihapus", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+                showCustomers();
+                
+                jTextField_id.setText("");
+                jTextField_name.setText("");
+                jTextField_address.setText("");
+                jTextField_email.setText("");
+                jTextField_phone.setText("");
+                jTextField_creditcard.setText("");
+                jTextField_credittype.setText("");
+                
+                jTextField_id.requestFocus();
+                
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Data gagal di hapus" + e.getMessage(), "Pesan", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButton_deleteCustomersActionPerformed
 
     /**
      * @param args the command line arguments
